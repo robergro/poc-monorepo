@@ -25,3 +25,8 @@ import Testing
     #expect(profile.bio == "Software developer")
     #expect(profile.dateOfBirth == "1990-01-01")
 }
+
+@Test func testFailureUserrMan()  {
+    #expect(1 == 2)
+}
+

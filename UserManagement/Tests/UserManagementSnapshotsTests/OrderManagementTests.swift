@@ -32,3 +32,8 @@ import Testing
 
     #expect(totalPrice == 150.0)
 }
+
+@Test func testFailureOrderMan()  {
+    #expect(1 == 2)
+}
+

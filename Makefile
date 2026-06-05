@@ -1,6 +1,7 @@
-.PHONY: test test-all clean build clear-snapshots
+.PHONY: test test-all test-unit test-snapshots clean build clear-snapshots
 
 PACKAGES = UserManagement ProductCatalog OrderManagement
+RESULTS_DIR = TestResults
 
 # Run tests for the main ECommerceApp package only ($ make test)
 test:
@@ -16,6 +17,60 @@ test-all:
 	@echo "Testing ECommerceApp..."
 	@swift test
 	@echo "\n✓ All tests completed successfully"
+
+# Run unit tests with JUnit XML output ($ make test-unit)
+test-unit:
+	@mkdir -p $(RESULTS_DIR)/junit
+	@rm -f $(RESULTS_DIR)/junit/*.xml
+	@failed_pkgs=""; \
+	for pkg in $(PACKAGES); do \
+		echo "Running unit tests for $$pkg..."; \
+		xml_path="$(RESULTS_DIR)/junit/$$pkg.xml"; \
+		if ! (cd $$pkg && swift test --xunit-output ../$$xml_path); then \
+			failed_pkgs="$$failed_pkgs $$pkg"; \
+		fi; \
+		echo ""; \
+	done; \
+	echo "Running unit tests for ECommerceApp..."; \
+	if ! swift test --xunit-output $(RESULTS_DIR)/junit/ECommerceApp.xml; then \
+		failed_pkgs="$$failed_pkgs ECommerceApp"; \
+	fi; \
+	echo ""; \
+	echo "JUnit XML results saved to $(RESULTS_DIR)/junit/"; \
+	ls -la $(RESULTS_DIR)/junit/*.xml 2>/dev/null || true; \
+	if [ -n "$$failed_pkgs" ]; then \
+		echo "\n✗ Failed packages:$$failed_pkgs"; \
+		exit 1; \
+	else \
+		echo "\n✓ All unit tests completed successfully"; \
+	fi
+
+# Run snapshot tests with .xcresult bundles ($ make test-snapshots)
+test-snapshots:
+	@mkdir -p $(RESULTS_DIR)/xcresult
+	@rm -rf $(RESULTS_DIR)/xcresult/*.xcresult
+	@failed_pkgs=""; \
+	for pkg in $(PACKAGES); do \
+		echo "Running snapshot tests for $$pkg..."; \
+		result_path="$(RESULTS_DIR)/xcresult/$$pkg.xcresult"; \
+		if ! (cd $$pkg && xcodebuild test -scheme $$pkg -resultBundlePath ../$$result_path); then \
+			failed_pkgs="$$failed_pkgs $$pkg"; \
+		fi; \
+		echo ""; \
+	done; \
+	echo "Running snapshot tests for ECommerceApp..."; \
+	if ! xcodebuild test -scheme ECommerceApp -resultBundlePath $(RESULTS_DIR)/xcresult/ECommerceApp.xcresult; then \
+		failed_pkgs="$$failed_pkgs ECommerceApp"; \
+	fi; \
+	echo ""; \
+	echo "XCResult bundles saved to $(RESULTS_DIR)/xcresult/"; \
+	ls -la $(RESULTS_DIR)/xcresult/*.xcresult 2>/dev/null || true; \
+	if [ -n "$$failed_pkgs" ]; then \
+		echo "\n✗ Failed packages:$$failed_pkgs"; \
+		exit 1; \
+	else \
+		echo "\n✓ All snapshot tests completed successfully"; \
+	fi
 
 # Build all packages ($ make build)
 build:
