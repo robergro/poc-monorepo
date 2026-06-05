@@ -126,7 +126,3 @@ import OrderManagement
     #expect(available.contains { $0.id == "P003" })
     #expect(!available.contains { $0.id == "P002" })
 }
-
-@Test func testFailure()  {
-    #expect(1 == 2)
-}
