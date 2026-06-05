@@ -30,6 +30,8 @@ jobs:
         run: echo "Generate DocC for ECommerceApp, OrderManagement, ProductCatalog, and UserManagement packages at ${{ env.repo_name }}"
       - name: Checkout Action
         uses: actions/checkout@v6
+      - name: Create docs directory
+        run: mkdir -p ${{ env.doc_path }}
       - name: Build DocC for ECommerceApp
         run: |
           xcodebuild docbuild -scheme ECommerceApp -derivedDataPath ${{ env.xcodebuild_derivedData }} -destination 'generic/platform=iOS';
