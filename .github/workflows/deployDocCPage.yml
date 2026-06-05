@@ -1,7 +1,7 @@
 name: deploy-docC-on-github-page
 
 on:
-  workflow_call
+  workflow_dispatch
 
 env:
   repo_name: ${{ github.event.repository.name }}
