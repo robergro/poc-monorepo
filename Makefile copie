@@ -1,0 +1,28 @@
+.PHONY: test test-all clean build
+
+# Run tests for the main ECommerceApp package only
+test:
+	swift test
+
+# Run tests for all packages (ECommerceApp and all dependencies)
+test-all:
+	@echo "Testing UserManagement..."
+	@cd UserManagement && swift test
+	@echo "\nTesting ProductCatalog..."
+	@cd ProductCatalog && swift test
+	@echo "\nTesting OrderManagement..."
+	@cd OrderManagement && swift test
+	@echo "\nTesting ECommerceApp..."
+	@swift test
+	@echo "\n✓ All tests completed successfully"
+
+# Build all packages
+build:
+	swift build
+
+# Clean build artifacts
+clean:
+	swift package clean
+	cd UserManagement && swift package clean
+	cd ProductCatalog && swift package clean
+	cd OrderManagement && swift package clean
