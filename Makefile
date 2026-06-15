@@ -1,4 +1,4 @@
-.PHONY: test test-all test-unit test-snapshots clean build clear-snapshots
+.PHONY: test test-all test-unit test-snapshots clean build clear-snapshots sourcery sourcery-all
 
 PACKAGES = UserManagement ProductCatalog OrderManagement
 RESULTS_DIR = TestResults
@@ -92,3 +92,19 @@ clear-snapshots:
 		fi \
 	done
 	@echo "\n✓ All snapshots cleared successfully"
+
+# Run Sourcery for the root package only ($ make sourcery)
+sourcery:
+	sourcery --config .sourcery.yml
+
+# Run Sourcery for all packages ($ make sourcery-all)
+sourcery-all:
+	@echo "Running Sourcery for root package..."
+	@sourcery --config .sourcery.yml
+	@echo ""
+	@for pkg in $(PACKAGES); do \
+		echo "Running Sourcery for $$pkg..."; \
+		cd $$pkg && sourcery --config .sourcery.yml && cd ..; \
+		echo ""; \
+	done
+	@echo "✓ Sourcery completed for all packages"

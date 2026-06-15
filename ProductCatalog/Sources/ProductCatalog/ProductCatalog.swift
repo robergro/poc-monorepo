@@ -74,3 +74,12 @@ public struct Inventory {
         self.location = location
     }
 }
+
+
+
+// sourcery: AutoMockable, AutoMockTest
+protocol PCGetBorderUseCaseable {
+    func execute(
+        theme: Bool
+    ) -> String
+}

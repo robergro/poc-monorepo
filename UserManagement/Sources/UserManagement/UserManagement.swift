@@ -62,5 +62,18 @@ public struct UserProfile {
         self.user = user
         self.bio = bio
         self.dateOfBirth = dateOfBirth
+        print("LOGROB")
     }
+}
+
+protocol Theme {
+
+}
+
+// sourcery: AutoMockable, AutoMockTest
+protocol CardGetBorderUseCaseable {
+    // sourcery: theme = "Identical"
+    func execute(
+        theme: any Theme
+    ) -> String
 }

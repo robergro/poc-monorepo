@@ -75,3 +75,9 @@ public struct OrderItem {
         return Double(quantity) * unitPrice
     }
 }
+// sourcery: AutoMockable, AutoMockTest
+protocol OMGetBorderUseCaseable {
+    func execute(
+        theme: Bool
+    ) -> String
+}
