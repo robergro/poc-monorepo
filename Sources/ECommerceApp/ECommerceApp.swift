@@ -1,6 +1,6 @@
-import UserManagement
-import ProductCatalog
-import OrderManagement
+import UserManagementComponent
+import ProductCatalogComponent
+import OrderManagementComponent
 
 /// A struct representing a complete shopping session
 /// Combines user, products, and order information from all three modules

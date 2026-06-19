@@ -4,33 +4,23 @@
 import PackageDescription
 
 let package = Package(
-    name: "ECommerceApp",
+    name: "UserManagementComponent",
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "ECommerceApp",
-            targets: ["ECommerceApp"]
+            name: "UserManagementComponent",
+            targets: ["UserManagementComponent"]
         ),
-    ],
-    dependencies: [
-        .package(path: "./UserManagementComponent"),
-        .package(path: "./ProductCatalogComponent"),
-        .package(path: "./OrderManagementComponent"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "ECommerceApp",
-            dependencies: [
-                "UserManagementComponent",
-                "ProductCatalogComponent",
-                "OrderManagementComponent",
-            ]
+            name: "UserManagementComponent"
         ),
         .testTarget(
-            name: "ECommerceAppTests",
-            dependencies: ["ECommerceApp"]
+            name: "UserManagementComponentTests",
+            dependencies: ["UserManagementComponent"]
         ),
     ]
 )

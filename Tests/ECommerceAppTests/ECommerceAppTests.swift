@@ -1,8 +1,8 @@
 import Testing
 @testable import ECommerceApp
-import UserManagement
-import ProductCatalog
-import OrderManagement
+import UserManagementComponent
+import ProductCatalogComponent
+import OrderManagementComponent
 
 @Test func testShoppingSessionInitialization() async throws {
     let user = User(id: "U001", name: "Alice Johnson", email: "alice@example.com")

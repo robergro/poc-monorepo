@@ -1,6 +1,6 @@
 .PHONY: test test-all test-unit test-snapshots clean build clear-snapshots sourcery sourcery-all
 
-PACKAGES = UserManagement ProductCatalog OrderManagement
+PACKAGES = UserManagementComponent ProductCatalogComponent OrderManagementComponent
 RESULTS_DIR = TestResults
 
 ###################################
@@ -16,18 +16,11 @@ test:
 	swift test
 
 # Run tests for all packages (ECommerceApp and all dependencies) ($ make test-all)
-test-all:
-	@for pkg in $(PACKAGES); do \
-		echo "Testing $$pkg..."; \
-		cd $$pkg && swift test && cd ..; \
-		echo ""; \
-	done
-	@echo "Testing ECommerceApp..."
-	@swift test
+test-all: test-snapshots
 	@echo "\n✓ All tests completed successfully"
 
 # Run unit tests with JUnit XML output ($ make test-unit)
-test-unit:
+test-unit: sourcery-all
 	@mkdir -p $(RESULTS_DIR)/junit
 	@rm -f $(RESULTS_DIR)/junit/*.xml
 	@failed_pkgs=""; \
@@ -54,7 +47,7 @@ test-unit:
 	fi
 
 # Run snapshot tests with .xcresult bundles ($ make test-snapshots)
-test-snapshots:
+test-snapshots: sourcery-all
 	@mkdir -p $(RESULTS_DIR)/xcresult
 	@rm -rf $(RESULTS_DIR)/xcresult/*.xcresult
 	@failed_pkgs=""; \
