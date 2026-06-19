@@ -3,6 +3,14 @@
 PACKAGES = UserManagement ProductCatalog OrderManagement
 RESULTS_DIR = TestResults
 
+###################################
+#######################
+###########
+
+##
+## TESTS
+##
+
 # Run tests for the main ECommerceApp package only ($ make test)
 test:
 	swift test
@@ -72,9 +80,29 @@ test-snapshots:
 		echo "\n✓ All snapshot tests completed successfully"; \
 	fi
 
+###########
+#######################
+###################################
+
+##
+## BUILD
+##
+
 # Build all packages ($ make build)
 build:
 	swift build
+
+###########
+#######################
+###################################
+
+###################################
+#######################
+###########
+
+##
+## CLEAR & CLEAN
+##
 
 # Clean build artifacts ($ make clean)
 clean:
@@ -93,9 +121,17 @@ clear-snapshots:
 	done
 	@echo "\n✓ All snapshots cleared successfully"
 
-# Run Sourcery for the root package only ($ make sourcery)
-sourcery:
-	sourcery --config .sourcery.yml
+###########
+#######################
+###################################
+
+###################################
+#######################
+###########
+
+##
+## SOURCERY
+##
 
 # Run Sourcery for all packages ($ make sourcery-all)
 sourcery-all:
@@ -108,3 +144,7 @@ sourcery-all:
 		echo ""; \
 	done
 	@echo "✓ Sourcery completed for all packages"
+
+###########
+#######################
+###################################
