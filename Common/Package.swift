@@ -4,54 +4,46 @@
 import PackageDescription
 
 let package = Package(
-    name: "ProductCatalogComponent",
+    name: "Common",
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "ProductCatalogComponent",
-            targets: ["ProductCatalogComponent"]
+            name: "Common",
+            targets: ["Common"]
         ),
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "ProductCatalogComponentTesting",
-            targets: ["ProductCatalogComponentTesting"]
+            name: "CommonTesting",
+            targets: ["CommonTesting"]
         ),
-    ],
-    dependencies: [
-        .package(path: "../Common"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "ProductCatalogComponent",
-            dependencies: [
-                "Common"
-            ],
+            name: "Common",
             path: "Sources/Core"
         ),
         .target(
-            name: "ProductCatalogComponentTesting",
+            name: "CommonTesting",
             dependencies: [
-                "ProductCatalogComponent"
+                "Common"
             ],
             path: "Sources/Testing"
         ),
         .testTarget(
-            name: "ProductCatalogComponentTests",
+            name: "CommonTests",
             dependencies: [
-                "ProductCatalogComponent",
-                "ProductCatalogComponentTesting",
-                .product(name: "CommonTesting", package: "Common"),
+                "Common",
+                "CommonTesting"
             ],
             path: "Tests/UnitTests"
         ),
         .testTarget(
-            name: "ProductCatalogSnapshotsTests",
+            name: "CommonSnapshotsTests",
             dependencies: [
-                "ProductCatalogComponent",
-                "ProductCatalogComponentTesting",
-                .product(name: "CommonTesting", package: "Common"),
+                "Common",
+                "CommonTesting"
             ],
             path: "Tests/SnapshotTests"
         ),

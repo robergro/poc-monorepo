@@ -10,10 +10,6 @@ import XCTest
 import Testing
 
 import Combine
-import SparkTheming
-@_spi(SI_SPI) import SparkCommon
-@_spi(SI_SPI) import SparkCommonTesting
-@_spi(SI_SPI) import SparkThemingTesting
 
 
 
@@ -162,13 +158,13 @@ import SparkTheming
 
 
 
-@testable import SparkComponentBadge
+@testable import ProductCatalogComponent
 
 
 
 
 
-@_spi(SI_SPI) public final class PCGetBorderUseCaseableGeneratedMock: SparkComponentBadge.PCGetBorderUseCaseable, ResetGeneratedMock {
+@_spi(SI_SPI) public final class PCGetBorderUseCaseableGeneratedMock: ProductCatalogComponent.PCGetBorderUseCaseable, ResetGeneratedMock {
 
 
     // MARK: - Initialization

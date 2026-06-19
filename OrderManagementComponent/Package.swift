@@ -17,11 +17,17 @@ let package = Package(
             targets: ["OrderManagementComponentTesting"]
         ),
     ],
+    dependencies: [
+        .package(path: "../Common"),
+    ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "OrderManagementComponent",
+            dependencies: [
+                "Common"
+            ],
             path: "Sources/Core"
         ),
         .target(
@@ -35,7 +41,8 @@ let package = Package(
             name: "OrderManagementComponentTests",
             dependencies: [
                 "OrderManagementComponent",
-                "OrderManagementComponentTesting"
+                "OrderManagementComponentTesting",
+                .product(name: "CommonTesting", package: "Common"),
             ],
             path: "Tests/UnitTests"
         ),
@@ -43,7 +50,8 @@ let package = Package(
             name: "OrderManagementSnapshotsTests",
             dependencies: [
                 "OrderManagementComponent",
-                "OrderManagementComponentTesting"
+                "OrderManagementComponentTesting",
+                .product(name: "CommonTesting", package: "Common"),
             ],
             path: "Tests/SnapshotTests"
         ),

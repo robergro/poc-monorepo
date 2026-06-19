@@ -11,8 +11,14 @@ let package = Package(
             name: "ECommerceApp",
             targets: ["ECommerceApp"]
         ),
+        // Products define the executables and libraries a package produces, making them visible to other packages.
+        .library(
+            name: "ECommerceAppTesting",
+            targets: ["ECommerceAppTesting"]
+        ),
     ],
     dependencies: [
+        .package(path: "./Common"),
         .package(path: "./UserManagementComponent"),
         .package(path: "./ProductCatalogComponent"),
         .package(path: "./OrderManagementComponent"),
@@ -23,14 +29,41 @@ let package = Package(
         .target(
             name: "ECommerceApp",
             dependencies: [
+                "Common",
                 "UserManagementComponent",
                 "ProductCatalogComponent",
                 "OrderManagementComponent",
-            ]
+            ],
+            path: "Sources/Core"
+        ),
+        .target(
+            name: "ECommerceAppTesting",
+            dependencies: [
+                "OrderManagementComponent"
+            ],
+            path: "Sources/Testing"
         ),
         .testTarget(
             name: "ECommerceAppTests",
-            dependencies: ["ECommerceApp"]
+            dependencies: [
+                "ECommerceApp",
+                .product(name: "CommonTesting", package: "Common"),
+                .product(name: "UserManagementComponentTesting", package: "UserManagementComponent"),
+                .product(name: "ProductCatalogComponentTesting", package: "ProductCatalogComponent"),
+                .product(name: "OrderManagementComponentTesting", package: "OrderManagementComponent"),
+            ],
+            path: "Tests/UnitTests"
+        ),
+        .testTarget(
+            name: "ECommerceAppSnapshotsTests",
+            dependencies: [
+                "ECommerceApp",
+                .product(name: "CommonTesting", package: "Common"),
+                .product(name: "UserManagementComponentTesting", package: "UserManagementComponent"),
+                .product(name: "ProductCatalogComponentTesting", package: "ProductCatalogComponent"),
+                .product(name: "OrderManagementComponentTesting", package: "OrderManagementComponent"),
+            ],
+            path: "Tests/SnapshotTests"
         ),
     ]
 )

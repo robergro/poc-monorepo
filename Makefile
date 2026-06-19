@@ -1,6 +1,6 @@
 .PHONY: test test-all test-unit test-snapshots clean build clear-snapshots sourcery sourcery-all
 
-PACKAGES = UserManagementComponent ProductCatalogComponent OrderManagementComponent
+PACKAGES = Common $(shell find . -maxdepth 1 -type d -name "*Component*" -exec basename {} \; | sort)
 RESULTS_DIR = TestResults
 
 ###################################
@@ -11,12 +11,8 @@ RESULTS_DIR = TestResults
 ## TESTS
 ##
 
-# Run tests for the main ECommerceApp package only ($ make test)
-test:
-	swift test
-
-# Run tests for all packages (ECommerceApp and all dependencies) ($ make test-all)
-test-all: test-snapshots
+# Run tests for all packages (ECommerceApp and all dependencies) ($ make test)
+test: test-unit test-snapshots
 	@echo "\n✓ All tests completed successfully"
 
 # Run unit tests with JUnit XML output ($ make test-unit)
@@ -127,7 +123,7 @@ clear-snapshots:
 ##
 
 # Run Sourcery for all packages ($ make sourcery-all)
-sourcery-all:
+sourcery:
 	@echo "Running Sourcery for root package..."
 	@sourcery --config .sourcery.yml
 	@echo ""

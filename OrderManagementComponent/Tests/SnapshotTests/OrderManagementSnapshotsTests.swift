@@ -1,10 +1,11 @@
 import Testing
 @testable import OrderManagementComponent
+import CommonTesting
 
 @Test func testUIOrderStatusInitialization() async throws {
-    let status = OrderStatus(code: "PENDING", description: "Order is pending")
+    let status = OrderStatus(code: .mock, description: "Order is pending")
 
-    #expect(status.code == "PENDING")
+    #expect(status.code == .mock)
     #expect(status.description == "Order is pending")
 }
 
