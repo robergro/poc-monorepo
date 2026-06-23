@@ -121,7 +121,7 @@ test-snapshots: sourcery-all
 ## DOCUMENTATION
 ##
 
-# Generate DocC documentation for all packages ($ make docc or $ make docc HOSTING_BASE_PATH=my-custom-path)
+# Generate DocC documentation for all packages ($ make docc or $ make docc DOCC_OUTPUT_PATH=mu-output-path HOSTING_BASE_PATH=my-custom-path)
 # To test locally, use :
 # $ cd .docs && python3 -m http.server 8000
 # Then open http://localhost:8000
