@@ -131,7 +131,7 @@ docc:
 	@failed_pkgs=""; \
 	for pkg in $(PACKAGES); do \
 		echo "Building DocC for $$pkg..."; \
-		pkg_lower=$$(echo $$pkg | tr '[:upper:]' '[:lower:]' | sed 's/component//g'); \
+		pkg_lower=$$(echo $$pkg | tr '[:upper:]' '[:lower:]'); \
 		if ! (cd $$pkg && xcodebuild docbuild -scheme $$pkg-Package -derivedDataPath ../$(DOCC_DERIVED_DATA) -destination 'generic/platform=iOS'); then \
 			failed_pkgs="$$failed_pkgs $$pkg"; \
 		else \
