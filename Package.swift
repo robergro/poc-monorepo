@@ -42,7 +42,7 @@ let package = Package(
         .target(
             name: "ECommerceAppTesting",
             dependencies: [
-                "OrderManagementComponent"
+                "ECommerceApp"
             ],
             path: "Sources/Testing"
         ),

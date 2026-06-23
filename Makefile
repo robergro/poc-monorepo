@@ -1,7 +1,7 @@
 .PHONY: test test-all test-unit test-snapshots clean build clear-snapshots sourcery sourcery-all docc
 
 PACKAGES = Common $(shell find . -maxdepth 1 -type d -name "*Component*" -exec basename {} \; | sort)
-RESULTS_DIR = TestResults
+RESULTS_DIR = .testResults
 DERIVED_DATA_PATH = .spmComponentDerivedData/
 SDK = iphonesimulator
 DESTINATION = platform=iOS Simulator,name=iPhone 17,OS=26.2

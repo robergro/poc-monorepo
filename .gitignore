@@ -33,9 +33,10 @@ playground.xcworkspace
 .docs/
 .derivedData/
 .spmComponentDerivedData/
+*Generated/
 
 # Test Results
-TestResults/
+.testResults/
 *.xcresult
 
 # CocoaPods
