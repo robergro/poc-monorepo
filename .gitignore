@@ -30,6 +30,9 @@ playground.xcworkspace
 # .swiftpm
 
 .build/
+.docs/
+.derivedData/
+.spmComponentDerivedData/
 
 # Test Results
 TestResults/

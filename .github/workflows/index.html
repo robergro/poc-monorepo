@@ -159,70 +159,72 @@
     </button>
   </div>
   <p class="intro">Welcome to the documentation for the ECommerce monorepo packages.</p>
-  <ul class="package-grid">
-    <li class="package-card">
-      <a href="ecommerceapp/documentation/ecommerceapp">
-        <div class="card-image-container">
-          <img class="card-image theme-image"
-               data-light="https://raw.githubusercontent.com/robergro/poc-monorepo/main/.github/assets/light/ecommerceapp.png"
-               data-dark="https://raw.githubusercontent.com/robergro/poc-monorepo/main/.github/assets/dark/ecommerceapp.png"
-               alt="ECommerceApp">
-        </div>
-        <div class="card-content">
-          <h2 class="card-title">ECommerceApp</h2>
-          <p class="card-description">Main application package</p>
-        </div>
-      </a>
-    </li>
-    <li class="package-card">
-      <a href="ordermanagement/documentation/ordermanagement">
-        <div class="card-image-container">
-          <img class="card-image theme-image"
-               data-light="https://raw.githubusercontent.com/robergro/poc-monorepo/main/.github/assets/light/ordermanagement.png"
-               data-dark="https://raw.githubusercontent.com/robergro/poc-monorepo/main/.github/assets/dark/ordermanagement.png"
-               alt="OrderManagementComponent">
-        </div>
-        <div class="card-content">
-          <h2 class="card-title">OrderManagementComponent</h2>
-          <p class="card-description">Order management functionality</p>
-        </div>
-      </a>
-    </li>
-    <li class="package-card">
-      <a href="productcatalog/documentation/productcatalog">
-        <div class="card-image-container">
-          <img class="card-image theme-image"
-               data-light="https://raw.githubusercontent.com/robergro/poc-monorepo/main/.github/assets/light/productcatalog.png"
-               data-dark="https://raw.githubusercontent.com/robergro/poc-monorepo/main/.github/assets/dark/productcatalog.png"
-               alt="ProductCatalogComponent">
-        </div>
-        <div class="card-content">
-          <h2 class="card-title">ProductCatalogComponent</h2>
-          <p class="card-description">Product catalog management</p>
-        </div>
-      </a>
-    </li>
-    <li class="package-card">
-      <a href="usermanagement/documentation/usermanagement">
-        <div class="card-image-container">
-          <img class="card-image theme-image"
-               data-light="https://raw.githubusercontent.com/robergro/poc-monorepo/main/.github/assets/light/usermanagement.png"
-               data-dark="https://raw.githubusercontent.com/robergro/poc-monorepo/main/.github/assets/dark/usermanagement.png"
-               alt="UserManagementComponent">
-        </div>
-        <div class="card-content">
-          <h2 class="card-title">UserManagementComponent</h2>
-          <p class="card-description">User management functionality</p>
-        </div>
-      </a>
-    </li>
+  <ul class="package-grid" id="packageGrid">
+    <!-- Cards will be dynamically generated here -->
   </ul>
 
   <script>
     const themeToggle = document.getElementById('themeToggle');
     const themeIcon = document.getElementById('themeIcon');
     const html = document.documentElement;
-    const themeImages = document.querySelectorAll('.theme-image');
+    const packageGrid = document.getElementById('packageGrid');
+    let themeImages = [];
+
+    // Load packages and generate cards
+    const loadPackages = async () => {
+      try {
+        const response = await fetch('packages.json');
+        const packages = await response.json();
+
+        packages.forEach(pkg => {
+          // Create card element
+          const card = document.createElement('li');
+          card.className = 'package-card';
+
+          const link = document.createElement('a');
+          link.href = pkg.path;
+
+          // Image container
+          const imageContainer = document.createElement('div');
+          imageContainer.className = 'card-image-container';
+
+          const img = document.createElement('img');
+          img.className = 'card-image theme-image';
+          img.setAttribute('data-light', `https://raw.githubusercontent.com/robergro/poc-monorepo/main/.github/assets/light/${pkg.image}.png`);
+          img.setAttribute('data-dark', `https://raw.githubusercontent.com/robergro/poc-monorepo/main/.github/assets/dark/${pkg.image}.png`);
+          img.alt = pkg.title;
+
+          imageContainer.appendChild(img);
+
+          // Card content
+          const cardContent = document.createElement('div');
+          cardContent.className = 'card-content';
+
+          const title = document.createElement('h2');
+          title.className = 'card-title';
+          title.textContent = pkg.title;
+
+          const description = document.createElement('p');
+          description.className = 'card-description';
+          description.textContent = pkg.description;
+
+          cardContent.appendChild(title);
+          cardContent.appendChild(description);
+
+          link.appendChild(imageContainer);
+          link.appendChild(cardContent);
+          card.appendChild(link);
+
+          packageGrid.appendChild(card);
+          themeImages.push(img);
+        });
+
+        // Update images after all cards are loaded
+        updateImages(getThemePreference());
+      } catch (err) {
+        console.error('Failed to load packages:', err);
+      }
+    };
 
     // Update images based on theme
     const updateImages = (theme) => {
@@ -249,8 +251,9 @@
       localStorage.setItem('theme', theme);
     };
 
-    // Initialize theme
+    // Initialize theme and load packages
     applyTheme(getThemePreference());
+    loadPackages();
 
     // Toggle theme on button click
     themeToggle.addEventListener('click', () => {

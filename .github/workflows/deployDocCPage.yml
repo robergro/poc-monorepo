@@ -27,41 +27,16 @@ jobs:
     runs-on: macos-26
     steps:
       - name: Package names
-        run: echo "Generate DocC for ECommerceApp, OrderManagementComponent, ProductCatalogComponent, and UserManagementComponent packages at ${{ env.repo_name }}"
+        run: echo "Generate DocC packages at ${{ env.repo_name }}"
       - name: Checkout Action
         uses: actions/checkout@v6
       - name: Create docs directory
         run: mkdir -p ${{ env.doc_path }}
-      - name: Build DocC for ECommerceApp
-        run: |
-          xcodebuild docbuild -scheme ECommerceApp -derivedDataPath ${{ env.xcodebuild_derivedData }} -destination 'generic/platform=iOS';
-          $(xcrun --find docc) process-archive \
-            transform-for-static-hosting ${{ env.xcodebuild_derivedData }}/Build/Products/Debug-iphoneos/ECommerceApp.doccarchive \
-            --output-path ${{ env.doc_path }}/ecommerceapp \
-            --hosting-base-path ${{ env.repo_name }}/ecommerceapp;
-      - name: Build DocC for OrderManagementComponent
-        run: |
-          xcodebuild docbuild -scheme OrderManagementComponent -derivedDataPath ${{ env.xcodebuild_derivedData }} -destination 'generic/platform=iOS';
-          $(xcrun --find docc) process-archive \
-            transform-for-static-hosting ${{ env.xcodebuild_derivedData }}/Build/Products/Debug-iphoneos/OrderManagementComponent.doccarchive \
-            --output-path ${{ env.doc_path }}/ordermanagement \
-            --hosting-base-path ${{ env.repo_name }}/ordermanagement;
-      - name: Build DocC for ProductCatalogComponent
-        run: |
-          xcodebuild docbuild -scheme ProductCatalogComponent -derivedDataPath ${{ env.xcodebuild_derivedData }} -destination 'generic/platform=iOS';
-          $(xcrun --find docc) process-archive \
-            transform-for-static-hosting ${{ env.xcodebuild_derivedData }}/Build/Products/Debug-iphoneos/ProductCatalogComponent.doccarchive \
-            --output-path ${{ env.doc_path }}/productcatalog \
-            --hosting-base-path ${{ env.repo_name }}/productcatalog;
-      - name: Build DocC for UserManagementComponent
-        run: |
-          xcodebuild docbuild -scheme UserManagementComponent -derivedDataPath ${{ env.xcodebuild_derivedData }} -destination 'generic/platform=iOS';
-          $(xcrun --find docc) process-archive \
-            transform-for-static-hosting ${{ env.xcodebuild_derivedData }}/Build/Products/Debug-iphoneos/UserManagementComponent.doccarchive \
-            --output-path ${{ env.doc_path }}/usermanagement \
-            --hosting-base-path ${{ env.repo_name }}/usermanagement;
+      - name: Build DocC 
+        run: make docc HOSTING_BASE_PATH=${{ env.repo_name }}
       - name: Copy index page
-        run: cp .github/workflows/index.html ${{ env.doc_path }}/index.html
+        run: |
+          cp .github/workflows/index.html ${{ env.doc_path }}/index.html
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
